@@ -1,5 +1,6 @@
 from motors import *
 from lightsensor import *
+from serverpi import *
 import threading
 
 def drive(motors, lightsensors):
@@ -16,6 +17,9 @@ def drive(motors, lightsensors):
 def main():
 	motors = MotorDriver()
 	lightsensors = LightSensor()
+
+	#not sure what to do with server requests yet
+	#remoteServer = SocketServer.UDPServer(('', portListen), InputHandler)
 
 	try:
 		while(True):

@@ -20,7 +20,7 @@ class MotorDriver():
 		GPIO.setup(8, GPIO.OUT)
 		GPIO.output(8, True)
 
-		self.delay = .5
+		self.delay = delay
 
 	def move(self, direction):
 		GPIO.output(self.dir_lookup[direction], True)
