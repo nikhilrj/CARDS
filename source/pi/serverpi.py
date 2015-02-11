@@ -12,3 +12,8 @@ class InputHandler(SocketServer.BaseRequestHandler):
 		request = request.upper()			   # Convert command to upper case
 		driveCommands = request.split(',')	  # Separate the command into individual drives
 
+
+if __name__ == '__main__':
+	handler = SocketServer.UDPServer(('', portListen), InputHandler)
+	while(True)
+		handler.handle_request()
