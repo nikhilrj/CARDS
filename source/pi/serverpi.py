@@ -14,6 +14,6 @@ class InputHandler(SocketServer.BaseRequestHandler):
 
 
 if __name__ == '__main__':
-	handler = SocketServer.UDPServer(('', portListen), InputHandler)
-	while(True)
+	handler = SocketServer.TCPServer(('', portListen), InputHandler)
+	while(True):
 		handler.handle_request()
