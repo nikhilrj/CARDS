@@ -1,36 +1,23 @@
-import RPi.GPIO as GPIO
-import sys,tty,termios,time
-GPIO.setmode(GPIO.BOARD)
-GPIO.setwarnings(False)
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
-#Setup GPIO
-GPIO.setup (5, GPIO.OUT)    
-GPIO.setup (7, GPIO.OUT)      
-GPIO.setup (10, GPIO.OUT)    
-GPIO.setup (12, GPIO.OUT)
+import time
+import atexit
 
-#Enable Signals
-GPIO.setup (3, GPIO.OUT)
-GPIO.output(3,True)
-GPIO.setup (8, GPIO.OUT)
-GPIO.output(8,True)
+# create a default object, no changes to I2C address or frequency
+mh = Adafruit_MotorHAT(addr=0x60)
+
+# recommended for auto-disabling motors on shutdown!
+def turnOffMotors():
+	mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+
+atexit.register(turnOffMotors)
 
 
-#GPIO.setup (3, GPIO.OUT)#LED
-#GPIO.output(3,True)
-#ledstate = True
 
-#def getch():
-#    fd=sys.stdin.fileno()
-#    old_settings=termios.tcgetattr(fd)
-#    try:
-#        tty.setraw(sys.stdin.fileno())
-#        ch=sys.stdin.read(1)
-#    finally:
-#        termios.tcsetattr(fd,termios.TSCADRAIN,old_settings)
-#    return cd
-#
-while 1:
+while(True):
     control=raw_input()
 
     if (control == "a"):
