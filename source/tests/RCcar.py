@@ -8,40 +8,57 @@ mh = Adafruit_MotorHAT(addr=0x60)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
-	mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)   
+    mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 atexit.register(turnOffMotors)
 
+fl = mh.getMotor(1)
+fr = mh.getMotor(2)
+bl = mh.getMotor(3)
+br = mh.getMotor(4)
 
+motors = [fl, fr, bl, br]
 
 while(True):
     control=raw_input()
 
     if (control == "a"):
-        GPIO.output(5,True)
+        fl.setDirection(Adafruit_MotorHAT.BACKWARD)
+        bl.setDirection(Adafruit_MotorHAT.BACKWARD)
+        fr.setDirection(Adafruit_MotorHAT.FORWARD)
+        br.setDirection(Adafruit_MotorHAT.FORWARD)
+
+
     
     if (control == "d"):
-        GPIO.output(7,True)
+        fl.setDirection(Adafruit_MotorHAT.BACKWARD)
+        bl.setDirection(Adafruit_MotorHAT.BACKWARD)
+        fr.setDirection(Adafruit_MotorHAT.FORWARD)
+        br.setDirection(Adafruit_MotorHAT.FORWARD)
+
 
     if (control == "w"):
-        GPIO.output(12,True)
+        for i in motors:
+            i.setDirection(Adafruit_MotorHAT.FORWARD)
     
     if (control == "s"):
-        GPIO.output(10,True)
+        for i in motors:
+            i.setDirection(Adafruit_MotorHAT.BACKWARD)
 
+    
     if (control == "q"):    
  #       GPIO.output(3,False)#LED
         sys.exit("Bye!")
-     
-    time.sleep(.5)
-    GPIO.output(10,False)
-    GPIO.output(12,False)
-    GPIO.output(5,False)
-    GPIO.output(7,False)
-  #  ledstate=not ledstate
-  #  GPIO.output(3,ledstate)
 
-    
+    for i in motors:
+        i.setSpeed(50)
+     
+    time.sleep(1.5)
+
+
+    for i in motors:
+        i.setDirection(Adafruit_MotorHAT.BRAKE)
+        i.setSpeed(0)
