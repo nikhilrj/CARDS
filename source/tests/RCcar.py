@@ -26,27 +26,29 @@ while(True):
     control=raw_input()
 
     if (control == "a"):
-        fl.setDirection(Adafruit_MotorHAT.BACKWARD)
-        bl.setDirection(Adafruit_MotorHAT.BACKWARD)
-        fr.setDirection(Adafruit_MotorHAT.FORWARD)
-        br.setDirection(Adafruit_MotorHAT.FORWARD)
+        fl.run(Adafruit_MotorHAT.BACKWARD)
+        bl.run(Adafruit_MotorHAT.BACKWARD)
+        fr.run(Adafruit_MotorHAT.FORWARD)
+        br.run(Adafruit_MotorHAT.FORWARD)
 
 
     
     if (control == "d"):
-        fl.setDirection(Adafruit_MotorHAT.BACKWARD)
-        bl.setDirection(Adafruit_MotorHAT.BACKWARD)
-        fr.setDirection(Adafruit_MotorHAT.FORWARD)
-        br.setDirection(Adafruit_MotorHAT.FORWARD)
+        fl.run(Adafruit_MotorHAT.FORWARD)
+        bl.run(Adafruit_MotorHAT.FORWARD)
+        fr.run(Adafruit_MotorHAT.BACKWARD)
+        br.run(Adafruit_MotorHAT.BACKWARD)
 
 
     if (control == "w"):
         for i in motors:
-            i.setDirection(Adafruit_MotorHAT.FORWARD)
+            i.run(Adafruit_MotorHAT.FORWARD)
+
+	
     
     if (control == "s"):
         for i in motors:
-            i.setDirection(Adafruit_MotorHAT.BACKWARD)
+            i.run(Adafruit_MotorHAT.BACKWARD)
 
     
     if (control == "q"):    
@@ -54,11 +56,11 @@ while(True):
         sys.exit("Bye!")
 
     for i in motors:
-        i.setSpeed(50)
+        i.setSpeed(100)
      
     time.sleep(1.5)
 
 
     for i in motors:
-        i.setDirection(Adafruit_MotorHAT.BRAKE)
+        i.run(Adafruit_MotorHAT.RELEASE)
         i.setSpeed(0)
