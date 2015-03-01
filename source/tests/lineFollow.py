@@ -33,7 +33,7 @@ GPIO.setup(4, GPIO.IN)
 GPIO.setup(23, GPIO.IN)
 GPIO.setup(24, GPIO.IN)
 
-baseSpeed = 50
+baseSpeed = 40
 
 def sensorRead():
 	#returns sensor read data as an array
@@ -78,7 +78,10 @@ def driveMotors(lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FOR
 while(True):
 	sensorData = sensorRead()
 	print sensorData
-	[lSpeed, rSpeed, lDir, rDir] = calcWeights(sensorData)
+	try:
+		[lSpeed, rSpeed, lDir, rDir] = calcWeights(sensorData)
+	except:
+		print 'SHIT BROKE, DOING WHAT WE DID LAST!'
 	print [lSpeed, rSpeed]
 	driveMotors(lSpeed, rSpeed, lDir, rDir)
 	#time.sleep(.5)
