@@ -40,7 +40,7 @@ def sensorRead():
 	return [GPIO.input(4), GPIO.input(17), GPIO.input(27), GPIO.input(22), GPIO.input(23), GPIO.input(24)]
 
 
-def calcWeights(sensorData, c=4):
+def calcWeights(sensorData, c=16):
 	weights = [-12, -6, 0, 0, 6, 12]
 
 	numActive = 0
@@ -54,7 +54,15 @@ def calcWeights(sensorData, c=4):
 
 	weight = dot / numActive
 
-	return [baseSpeed + c*weight, baseSpeed - c*weight, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.FORWARD]
+	lSpeed = baseSpeed + c*weight
+	rSpeed = baseSpeed - c*weight
+
+	if lSpeed < 0: 
+		lSpeed = 0
+	if rSpeed < 0:
+		rSpeed = 0
+
+	return [lSpeed, rSpeed, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.FORWARD]
 
 def driveMotors(lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
 	fl.setSpeed(lSpeed)
@@ -69,5 +77,8 @@ def driveMotors(lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FOR
 
 while(True):
 	sensorData = sensorRead()
+	print sensorData
 	[lSpeed, rSpeed, lDir, rDir] = calcWeights(sensorData)
-	driveMotors(sensorData)
+	print [lSpeed, rSpeed]
+	driveMotors(lSpeed, rSpeed, lDir, rDir)
+	#time.sleep(.5)
