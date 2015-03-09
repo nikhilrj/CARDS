@@ -86,7 +86,7 @@ def gen_prime() :
 	return (primes[random.randint(1, len(primes)-1)])
 	"""
 	
-	n = 100
+	n = 1000
 	if n == 2 : 
 		return [2]
 	elif n < 2 :
