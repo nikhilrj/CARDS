@@ -2,6 +2,7 @@
 //
 
 
+#include "stdafx.h"
 #include <iostream>
 #include <cassert>
 #include <string>
@@ -78,7 +79,7 @@ void driveState(stateMachine& state){
 
 	}
 
-	assert(G == state.nextState->signature);
+	//assert(G == state.nextState->signature);
 	
 }
 
@@ -91,6 +92,7 @@ int main(int argc, char* argv[])
 	while(1){
 		driveState(state);
 		state = *(state.nextState);
+		assert(G == state.signature);
 	}
 
 	return 0;

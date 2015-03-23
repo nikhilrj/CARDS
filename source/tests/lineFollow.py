@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import sys,tty,termios,time
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import atexit
+
 import os
 
 # create a default object, no changes to I2C address or frequency
@@ -56,7 +57,7 @@ def sensorRead():
 
 
 def calcWeights(sensorData, c=16):
-	weights = [-4, -2, 0, 0, 2, 4]
+	weights = [-12, -6, 0, 0, 6, 12]
 
 	numActive = 0
 	for i in sensorData:
@@ -136,5 +137,14 @@ while(True):
 		2+2
 	
 	#print [lSpeed, rSpeed]
+
+while(True):
+	sensorData = sensorRead()
+	print sensorData
+	try:
+		[lSpeed, rSpeed, lDir, rDir] = calcWeights(sensorData)
+	except:
+		print 'SHIT BROKE, DOING WHAT WE DID LAST!'
+	print [lSpeed, rSpeed]
 	driveMotors(lSpeed, rSpeed, lDir, rDir)
 	#time.sleep(.5)

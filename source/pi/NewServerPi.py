@@ -4,42 +4,41 @@ import socket
 import SocketServer
 import threading
 import miniRSA
+import rsa
+import time
 
 testIP = '127.0.0.1'
 portListen = 1337
-size = 1024
-
+size = 2048
+bitKeySize = 1024
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((testIP, portListen))
-server.listen(5)
+server.listen(1)
 
 conn, client_addr = server.accept()
 
-key = conn.recv(size)
-key = key.split(',')
-keyTuple = (key[0], key[1])
+print 'Connected to Client.'
 
-print 'Client Public key Received'
+### Process of generating a public and private key ###
+(pubKey, privKey) = rsa.newkeys(bitKeySize)
 
-## decrypt function ##
-def decrypt(keyTuple, buff):
-        """
-        Decrypts input integer list into sentences
-        """
+pubKeyN = pubKey.n
+pubKeyE = pubKey.e
+pubKeyN = str(pubKeyN)
+pubKeyE = str(pubKeyE)
+print pubKeyN
+print pubKeyE
+conn.send(pubKeyN)
+time.sleep(1)
+conn.send(pubKeyE)
 
-        words = buff.split(",")
-        decrypted_data = ""
-        # print words;
-        # sys.exit();
-        for i in range(0, len(words) - 1):
-            decrypted_data += str(miniRSA.decode(miniRSA.endecrypt(words[i], keyTuple[0], keyTuple[1])))
-        return decrypted_data
+print 'Client Public key sent.'
 
 #### Loop to receive messages 
 while(True):
 
 	encryptedMessage = conn.recv(size)
 	print (encryptedMessage)
-   	decryptedMessage = decrypt(keyTuple, encryptedMessage)
+	decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
    	print decryptedMessage.upper()

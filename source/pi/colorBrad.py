@@ -1,7 +1,8 @@
 import smbus
 import time
 bus = smbus.SMBus(1)
-i2cAdr = 0x30;
+
+i2cAdr = 0x29;
 
 # I2C address i2cAdr
 # Register 0x12 has device ver. 

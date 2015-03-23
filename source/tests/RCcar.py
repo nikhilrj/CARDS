@@ -22,6 +22,8 @@ br = mh.getMotor(4)
 
 motors = [fl, fr, bl, br]
 
+def 
+
 while(True):
     control=raw_input()
 
