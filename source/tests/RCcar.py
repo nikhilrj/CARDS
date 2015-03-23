@@ -44,11 +44,22 @@ while(True):
         for i in motors:
             i.run(Adafruit_MotorHAT.FORWARD)
 
-	
-    
     if (control == "s"):
         for i in motors:
             i.run(Adafruit_MotorHAT.BACKWARD)
+
+    if (control == "c"):
+        fl.run(Adafruit_MotorHAT.FORWARD)
+        bl.run(Adafruit_MotorHAT.FORWARD)
+        fr.run(Adafruit_MotorHAT.FORWARD)
+        br.run(Adafruit_MotorHAT.FORWARD)
+
+        fl.setSpeed(50)
+        fr.setSpeed(125)
+        bl.setSpeed(50)
+        br.setSpeed(125)
+        
+        time.sleep(6)
 
     
     if (control == "q"):    
