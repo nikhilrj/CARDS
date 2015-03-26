@@ -2,11 +2,8 @@
 
 import smbus, time
 
-class ColorSensor:
+class ColorSensor():
 #class for encapsulating color operations
-
-
-
 
 	def __init__(self, whiteThreshold, blackThreshold):
 		self.bus = smbus.SMBus(1);
@@ -21,12 +18,8 @@ class ColorSensor:
 			bus.write_byte(self.i2cAdr, 0x80|0x00) # 0x00 = ENABLE register
 			bus.write_byte(self.i2cAdr, 0x01|0x02) # 0x01 = Power on, 0x02 RGB sensors enabled
 			bus.write_byte(self.i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB
-	
 
-	
-	
-
-	def readColor():
+	def readColor(self):
 		data = self.bus.read_i2c_block_data(self.i2cAdr, 0)
 		clear = clear = data[1] << 8 | data[0]
 		red = data[3] << 8 | data[2]
@@ -34,7 +27,7 @@ class ColorSensor:
 		blue = data[7] << 8 | data[6]
 		return [clear, red, green, blue]
 	
-	def distance(colorReading):
+	def distance(self, colorReading):
 		color = ''
 		if (colorReading[0] < blackThreshold):
 			color = 'black'
