@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 
-class direction():
+class Direction():
 
 	def __init__(self):
 		GPIO.setmode(GPIO.BCM)

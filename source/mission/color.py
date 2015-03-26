@@ -5,7 +5,7 @@ import smbus, time
 class ColorSensor():
 #class for encapsulating color operations
 
-	def __init__(self, whiteThreshold, blackThreshold):
+	def __init__(self, whiteThreshold = 25000, blackThreshold = 5000):
 		self.bus = smbus.SMBus(1);
 		self.i2cAdr = 0x29;
 		self.blackThreshold = blackThreshold;

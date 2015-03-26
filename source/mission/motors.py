@@ -15,13 +15,13 @@ class MotorDriver():
 
 		self.motors = [fl, fr, bl, br]
 		
-	def turnOffMotors(self):
+	def turnOff(self):
 		mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)   
 		mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 		mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
 		mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
-	def driveMotors(self, lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
+	def drive(self, lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
 		fl.setSpeed(lSpeed)
 		bl.setSpeed(lSpeed)
 		fr.setSpeed(rSpeed)
@@ -31,5 +31,3 @@ class MotorDriver():
 		bl.run(lDir)
 		fr.run(rDir)
 		br.run(rDir)
-
-	#atexit.register(turnOffMotors)
