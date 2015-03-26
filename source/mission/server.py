@@ -5,7 +5,7 @@ import SocketServer
 import rsa
 import time
 
-class PiServer:
+class PiServer():
 
 	def __init__(self, Ip = '127.0.0.1', port = 1337, sz = 2048, keySz = 1024):
 		self.testIP = Ip
