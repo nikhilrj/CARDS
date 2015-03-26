@@ -2,43 +2,43 @@ import sys
 import os
 import socket
 import SocketServer
-import threading
-import miniRSA
 import rsa
 import time
 
-testIP = '127.0.0.1'
-portListen = 1337
-size = 2048
-bitKeySize = 1024
+class PiServer:
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((testIP, portListen))
-server.listen(1)
+	def __init__(self, Ip = '127.0.0.1', port = 1337, sz = 2048, keySz = 1024):
+		self.testIP = Ip
+		self.portListen = port
+		self.size = sz
+		self.bitKeySize = keySz
 
-conn, client_addr = server.accept()
+		server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		server.bind((testIP, portListen))
+		server.listen(1)
 
-print 'Connected to Client.'
+		conn, client_addr = server.accept()
 
-### Process of generating a public and private key ###
-(pubKey, privKey) = rsa.newkeys(bitKeySize)
+		print 'Connected to Client.'
 
-pubKeyN = pubKey.n
-pubKeyE = pubKey.e
-pubKeyN = str(pubKeyN)
-pubKeyE = str(pubKeyE)
-print pubKeyN
-print pubKeyE
-conn.send(pubKeyN)
-time.sleep(1)
-conn.send(pubKeyE)
+	### Process of generating a public and private key ###
 
-print 'Client Public key sent.'
+	def keyExchange(self):
 
-#### Loop to receive messages
-def serverOperation():
+		(pubKey, privKey) = rsa.newkeys(bitKeySize)
+		pubKeyN = pubKey.n
+		pubKeyE = pubKey.e
+		pubKeyN = str(pubKeyN)
+		pubKeyE = str(pubKeyE)
+		conn.send(pubKeyN)
+		time.sleep(1)
+		conn.send(pubKeyE)
 
-	encryptedMessage = conn.recv(size)
-	print (encryptedMessage)
-	decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
-   	print decryptedMessage.upper()
+		print 'Client Public key sent.'
+
+	#### Loop to receive messages
+	def serverOperation(self):
+
+		encryptedMessage = conn.recv(size)
+		decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
+	   	print decryptedMessage.upper()
