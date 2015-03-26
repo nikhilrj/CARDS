@@ -35,8 +35,8 @@ conn.send(pubKeyE)
 
 print 'Client Public key sent.'
 
-#### Loop to receive messages 
-while(True):
+#### Loop to receive messages
+def serverOperation():
 
 	encryptedMessage = conn.recv(size)
 	print (encryptedMessage)
