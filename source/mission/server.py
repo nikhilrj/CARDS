@@ -25,7 +25,7 @@ class PiServer():
 
 	def keyExchange(self):
 
-		(pubKey, privKey) = rsa.newkeys(bitKeySize)
+		(pubKey, privKey) = rsa.newkeys(self.bitKeySize)
 		pubKeyN = pubKey.n
 		pubKeyE = pubKey.e
 		pubKeyN = str(pubKeyN)
@@ -36,9 +36,8 @@ class PiServer():
 
 		print 'Client Public key sent.'
 
-	#### Loop to receive messages
 	def serverOperation(self):
 
-		encryptedMessage = conn.recv(size)
+		encryptedMessage = conn.recv(self.size)
 		decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
 	   	print decryptedMessage.upper()
