@@ -22,12 +22,12 @@ class MotorDriver():
 		mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 	def drive(self, lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
-		fl.setSpeed(lSpeed)
-		bl.setSpeed(lSpeed)
-		fr.setSpeed(rSpeed)
-		br.setSpeed(rSpeed)
+		self.fl.setSpeed(lSpeed)
+		self.bl.setSpeed(lSpeed)
+		self.fr.setSpeed(rSpeed)
+		self.br.setSpeed(rSpeed)
 
-		fl.run(lDir)
-		bl.run(lDir)
-		fr.run(rDir)
-		br.run(rDir)
+		self.fl.run(lDir)
+		self.bl.run(lDir)
+		self.fr.run(rDir)
+		self.br.run(rDir)
