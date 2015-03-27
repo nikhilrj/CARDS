@@ -32,7 +32,7 @@ while(True):
 		pin24 += GPIO.input(24) 
 		count += 1
 	else:
-		print  pin17, pin18, pin27, pin22, pin23, pin24
+		print pin4,  pin17, pin18, pin27, pin22, pin23, pin24
 		count = 0
 		pin4 = 0
 		pin17 = 0

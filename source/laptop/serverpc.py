@@ -14,7 +14,7 @@ size = 2048
 sender = socket.socket(socket.AF_INET, socket.SOCK_STREAM)	 # Create the socket
 
 sender.connect((broadcastIP, broadcastPort)) # Set the IP and port number to use locally, IP 0.0.0.0 means all connections and port 0 means assign a number for us (do not care)
-
+print 'connected'
 ### Process of Receiving Public Key ###
 pubKeyN = sender.recv(size)
 print pubKeyN

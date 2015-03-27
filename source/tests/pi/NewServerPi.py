@@ -5,12 +5,12 @@ import SocketServer
 import threading
 import miniRSA
 import rsa
-import time
+import time, select
 
 testIP = '127.0.0.1'
 portListen = 1337
 size = 2048
-bitKeySize = 1024
+bitKeySize = 256
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((testIP, portListen))
@@ -36,9 +36,12 @@ conn.send(pubKeyE)
 print 'Client Public key sent.'
 
 #### Loop to receive messages 
+i = 0
 while(True):
-
-	encryptedMessage = conn.recv(size)
-	print (encryptedMessage)
-	decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
-   	print decryptedMessage.upper()
+	i += 1
+	print i
+	if select.select([conn], [], [], 0)[0]:
+		encryptedMessage = conn.recv(size)
+		#print (encryptedMessage)
+		decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
+	  	print decryptedMessage.lower()
