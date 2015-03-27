@@ -1,5 +1,16 @@
 #color.py handles color detection and selection
 
+#whiteAverage:	[52000, 16000, 19350, 12000]
+
+#redaverage:	[16800, 9500, 3100, 3450]
+
+#blueaverage[19000, 3800, 6300, 7500]
+
+#greenaverage[26000, 5400, 11000, 6800]
+
+#blackaverage[3500, 1000, 1300, 800]
+
+
 import smbus, time
 
 class ColorSensor():
