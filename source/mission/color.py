@@ -45,8 +45,12 @@ class ColorSensor():
 		elif (colorReading[0] > whiteThreshold):
 			color = 'white'
 		else:
-			if (colorReading[1] > colorReading[3]):
+			if ((colorReading[1] > colorReading[3])&&(colorReading[1] > colorReading[2])):
 				color = 'red'
+			elif((colorReading[2] > colorReading[1])&&(colorReading[2] > colorReading[3])
+				color = 'green'
+			elif((colorReading[3] > colorReading[1])&&(colorReading[3] > colorReading[2])
+				color = 'blue'	
 			else:
 				color = 'blue'
 		return color
