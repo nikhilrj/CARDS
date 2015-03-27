@@ -11,7 +11,7 @@ def mission():
 	colorSensor = ColorSensor()
 	direction = Direction()
 
-	atexit.register(turnOffMotors)
+	atexit.register(motors.turnOff)
 
 	while(True):
 		#Make calls to other files
@@ -22,11 +22,11 @@ def mission():
 		print color, colorReading, sensorData
 
 		try:
-			[lSpeed, rSpeed, lDir, rDir] = calcWeights(sensorData)
-			motors.driveMotors(lSpeed, rSpeed, lDir, rDir)
+			[lSpeed, rSpeed, lDir, rDir] = direction.calcWeights(sensorData)
+			motors.drive(lSpeed, rSpeed, lDir, rDir)
 		except ZeroDivisionError as e:
 			print e
 			motors.turnOff()
 			
 if __name__ == '__main__':
-	main()
+	mission()

@@ -21,14 +21,14 @@ class ColorSensor():
 		self.i2cAdr = 0x29;
 		self.blackThreshold = blackThreshold;
 		self.whiteThreshold = whiteThreshold;
-		bus.write_byte(self.i2cAdr,0x80|0x12)
-		ver = bus.read_byte(i2cAdr)
+		self.bus.write_byte(self.i2cAdr,0x80|0x12)
+		ver = self.bus.read_byte(self.i2cAdr)
 
 		if ver == 0x44:
 			print "Device found\n"
-			bus.write_byte(self.i2cAdr, 0x80|0x00) # 0x00 = ENABLE register
-			bus.write_byte(self.i2cAdr, 0x01|0x02) # 0x01 = Power on, 0x02 RGB sensors enabled
-			bus.write_byte(self.i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB
+			self.bus.write_byte(self.i2cAdr, 0x80|0x00) # 0x00 = ENABLE register
+			self.bus.write_byte(self.i2cAdr, 0x01|0x02) # 0x01 = Power on, 0x02 RGB sensors enabled
+			self.bus.write_byte(self.i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB
 
 	def readColor(self):
 		data = self.bus.read_i2c_block_data(self.i2cAdr, 0)
@@ -40,16 +40,16 @@ class ColorSensor():
 	
 	def distance(self, colorReading):
 		color = ''
-		if (colorReading[0] < blackThreshold):
+		if (colorReading[0] < self.blackThreshold):
 			color = 'black'
-		elif (colorReading[0] > whiteThreshold):
+		elif (colorReading[0] > self.whiteThreshold):
 			color = 'white'
 		else:
-			if ((colorReading[1] > colorReading[3])&&(colorReading[1] > colorReading[2])):
+			if ((colorReading[1] > colorReading[3]) and (colorReading[1] > colorReading[2])):
 				color = 'red'
-			elif((colorReading[2] > colorReading[1])&&(colorReading[2] > colorReading[3])
+			elif((colorReading[2] > colorReading[1]) and (colorReading[2] > colorReading[3])):
 				color = 'green'
-			elif((colorReading[3] > colorReading[1])&&(colorReading[3] > colorReading[2])
+			elif((colorReading[3] > colorReading[1]) and (colorReading[3] > colorReading[2])):
 				color = 'blue'	
 			else:
 				color = 'blue'

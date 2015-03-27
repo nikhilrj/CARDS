@@ -1,8 +1,9 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import RPi.GPIO as GPIO
 
+mh = Adafruit_MotorHAT(addr=0x60)
+
 class MotorDriver():
-	mh = Adafruit_MotorHAT(addr=0x60)
 	baseSpeed = 50
 
 	def __init__(self, spd = 50):			
@@ -13,7 +14,7 @@ class MotorDriver():
 		self.bl = mh.getMotor(3)
 		self.br = mh.getMotor(4)
 
-		self.motors = [fl, fr, bl, br]
+		self.motors = [self.fl, self.fr, self.bl, self.br]
 		
 	def turnOff(self):
 		mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)   
