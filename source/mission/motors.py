@@ -6,7 +6,7 @@ mh = Adafruit_MotorHAT(addr=0x60)
 class MotorDriver():
 	baseSpeed = 50
 
-	def __init__(self, spd = 50):			
+	def __init__(self, spd = 96):			
 		baseSpeed = spd
 
 		self.fl = mh.getMotor(1)

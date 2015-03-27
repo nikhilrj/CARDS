@@ -16,11 +16,11 @@ class Direction():
 
 	def sensorRead(self):
 		#returns sensor read data as an array
-		return [GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23), GPIO.input(24)]
+		#return [GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23), GPIO.input(24)]
+		return [GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
 
-
-	def calcWeights(self, sensorData, c=32, baseSpeed = 50):
-		weights = [-4, -2, 0, 0, 2, 4]
+	def calcWeights(self, sensorData, c=32, baseSpeed = 48):
+		weights = [-2, 0, 0, 2]
 
 		numActive = 0
 		for i in sensorData:
