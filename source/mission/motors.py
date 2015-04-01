@@ -23,6 +23,9 @@ class MotorDriver():
 		mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 	def drive(self, lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
+		global CFC
+		CFC.update(MotorDriver.drive)
+		
 		self.fl.setSpeed(lSpeed)
 		self.bl.setSpeed(lSpeed)
 		self.fr.setSpeed(rSpeed)

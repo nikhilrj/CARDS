@@ -37,6 +37,9 @@ class PiServer():
 		print 'Client Public key sent.'
 
 	def operation(self):
+		global CFC
+		CFC.update(PiServer.operation)
+
 		if select.select([self.conn], [], [], 0)[0]:
 			encryptedMessage = self.conn.recv(self.size)
 			decryptedMessage = rsa.decrypt(encryptedMessage, self.privKey)
