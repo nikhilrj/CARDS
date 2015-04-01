@@ -1,4 +1,7 @@
 #Mission.py handles all overhead mission operation
+from control import *
+CFC = ControlFlowControl()
+
 from motors import *
 from color import *
 from server import *
