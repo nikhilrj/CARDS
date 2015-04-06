@@ -21,6 +21,10 @@ class ControlFlowControl():
 		self.prevState = fnc
 
 	def __isValid__(self, current):
-		if current not in self.graph[self.prevState]:
+		if self.prevState not in self.graph[current]:
 			raise ControlFlowException(str(current) + ' cannot follow ' + str(self.prevState))
+	
+	def __str__(self):
+		return (str(self.prevState) + ' ' + str(self.graph))
 
+CFC = ControlFlowControl()

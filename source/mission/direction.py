@@ -22,6 +22,7 @@ class Direction():
 		#return [GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23), GPIO.input(24)]
 
 		global CFC
+		#print CFC
 		CFC.update(Direction.sensorRead)
 
 		return [GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
