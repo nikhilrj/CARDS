@@ -1,6 +1,5 @@
 #Mission.py handles all overhead mission operation
 from control import *
-CFC = ControlFlowControl()
 
 from motors import *
 from color import *
@@ -9,13 +8,13 @@ from direction import *
 
 import os, atexit, time, atexit
 
-
-CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive])
-CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
-CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor])
-CFC.buildGraph(Server.operation, [ColorSensor.distance, MotorDriver.turnOff])
-CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance])
-CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights])
+def buildControlGraph():
+	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive])
+	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
+	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor])
+	CFC.buildGraph(Server.operation, [ColorSensor.distance, MotorDriver.turnOff])
+	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance])
+	CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights])
 
 def mission():
 	motors = MotorDriver()
@@ -60,4 +59,5 @@ def mission():
 
 			
 if __name__ == '__main__':
+	buildControlGraph()
 	mission()

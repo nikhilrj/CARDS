@@ -1,6 +1,9 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import RPi.GPIO as GPIO
 
+from control import *
+
+
 mh = Adafruit_MotorHAT(addr=0x60)
 
 class MotorDriver():

@@ -1,6 +1,9 @@
 from Adafruit_MotorHAT import *
 import RPi.GPIO as GPIO
 
+from control import *
+
+
 class Direction():
 
 	def __init__(self):

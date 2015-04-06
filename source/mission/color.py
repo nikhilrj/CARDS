@@ -13,6 +13,9 @@
 
 import smbus, time
 
+from control import *
+
+
 class ColorSensor():
 #class for encapsulating color operations
 
