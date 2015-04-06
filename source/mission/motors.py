@@ -17,6 +17,8 @@ class MotorDriver():
 		self.motors = [self.fl, self.fr, self.bl, self.br]
 		
 	def turnOff(self):
+		global CFC
+		CFC.update(MotorDriver.turnOff)
 		mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)   
 		mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 		mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
