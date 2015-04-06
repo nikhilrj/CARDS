@@ -1,6 +1,9 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import RPi.GPIO as GPIO
 
+from control import *
+
+
 mh = Adafruit_MotorHAT(addr=0x60)
 
 class MotorDriver():
@@ -17,12 +20,17 @@ class MotorDriver():
 		self.motors = [self.fl, self.fr, self.bl, self.br]
 		
 	def turnOff(self):
+		global CFC
+		CFC.update(MotorDriver.turnOff)
 		mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)   
 		mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 		mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
 		mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
 
 	def drive(self, lSpeed=baseSpeed, rSpeed=baseSpeed, lDir = Adafruit_MotorHAT.FORWARD, rDir = Adafruit_MotorHAT.FORWARD):
+		global CFC
+		CFC.update(MotorDriver.drive)
+		
 		self.fl.setSpeed(lSpeed)
 		self.bl.setSpeed(lSpeed)
 		self.fr.setSpeed(rSpeed)

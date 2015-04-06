@@ -3,7 +3,7 @@ class ControlFlowException(Exception):
 	def __init__(self, val):
 		self.value = val
 
-	def __str__(self)
+	def __str__(self):
 		return repr(self.value)
 
 
@@ -17,9 +17,14 @@ class ControlFlowControl():
 		self.graph[current] = previous
 
 	def update(self, fnc):
+		self.__isValid__(fnc)
 		self.prevState = fnc
 
-	def valid(self, current):
-		if not current in self.graph[self.prevState]:
-			raise ControlFlowException(current ' cannot follow ' self.prevState)
+	def __isValid__(self, current):
+		if self.prevState not in self.graph[current]:
+			raise ControlFlowException(str(current) + ' cannot follow ' + str(self.prevState))
+	
+	def __str__(self):
+		return (str(self.prevState) + ' ' + str(self.graph))
 
+CFC = ControlFlowControl()

@@ -1,6 +1,9 @@
 from Adafruit_MotorHAT import *
 import RPi.GPIO as GPIO
 
+from control import *
+
+
 class Direction():
 
 	def __init__(self):
@@ -17,9 +20,17 @@ class Direction():
 	def sensorRead(self):
 		#returns sensor read data as an array
 		#return [GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23), GPIO.input(24)]
+
+		global CFC
+		#print CFC
+		CFC.update(Direction.sensorRead)
+
 		return [GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
 
 	def calcWeights(self, sensorData, c=32, baseSpeed = 48):
+		global CFC
+		CFC.update(Direction.calcWeights)
+		
 		weights = [-2, 0, 0, 2]
 
 		numActive = 0

@@ -13,6 +13,9 @@
 
 import smbus, time
 
+from control import *
+
+
 class ColorSensor():
 #class for encapsulating color operations
 
@@ -31,6 +34,9 @@ class ColorSensor():
 			self.bus.write_byte(self.i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB
 
 	def readColor(self):
+		global CFC
+		CFC.update(ColorSensor.readColor)
+		
 		data = self.bus.read_i2c_block_data(self.i2cAdr, 0)
 		clear = clear = data[1] << 8 | data[0]
 		red = data[3] << 8 | data[2]
@@ -39,6 +45,9 @@ class ColorSensor():
 		return [clear, red, green, blue]
 	
 	def distance(self, colorReading):
+		global CFC
+		CFC.update(ColorSensor.distance)
+
 		color = ''
 		if (colorReading[0] < self.blackThreshold):
 			color = 'black'

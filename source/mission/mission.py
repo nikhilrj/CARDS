@@ -1,10 +1,23 @@
 #Mission.py handles all overhead mission operation
+from control import *
+
 from motors import *
 from color import *
 from server import *
 from direction import *
 
 import os, atexit, time, atexit
+
+def buildControlGraph():
+	global CFC
+	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive])
+	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
+	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor])
+	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
+	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation])
+	CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights])
+
+	print CFC
 
 def mission():
 	motors = MotorDriver()
@@ -49,4 +62,5 @@ def mission():
 
 			
 if __name__ == '__main__':
+	buildControlGraph()
 	mission()
