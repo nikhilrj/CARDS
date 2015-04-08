@@ -17,6 +17,7 @@ class ControlFlowControl():
 		self.graph[current] = previous
 
 	def update(self, fnc):
+		#print fnc, self.prevState
 		self.__isValid__(fnc)
 		self.prevState = fnc
 

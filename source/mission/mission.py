@@ -10,7 +10,7 @@ import os, atexit, time, atexit
 
 def buildControlGraph():
 	global CFC
-	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive])
+	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights])
 	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
 	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor])
 	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
@@ -58,8 +58,6 @@ def mission():
 				#print e
 				2+2
 				#motors.turnOff()
-
-
 			
 if __name__ == '__main__':
 	buildControlGraph()

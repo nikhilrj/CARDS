@@ -1,8 +1,8 @@
-import sys
-import os
-import socket
-import SocketServer
-import rsa
+import sys 
+import os 
+import socket 
+import SocketServer 
+import rsa 
 import time, select
 
 from control import *
@@ -18,7 +18,11 @@ class PiServer():
 		server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		server.bind((self.testIP, self.portListen))
 		server.listen(1)
-
+		print dir()
+		#print locals()
+		#for i in locals().keys():
+		#	if isinstance(locals()[i], PiServer):
+		#		print locals()[i]
 		self.conn, self.client_addr = server.accept()
 
 		print 'Connected to Client.'
