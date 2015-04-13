@@ -27,7 +27,7 @@ class Direction():
 
 		return [GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
 
-	def calcWeights(self, sensorData, c=32, baseSpeed = 48):
+	def calcWeights(self, sensorData, c=64, baseSpeed = 48):
 		global CFC
 		CFC.update(Direction.calcWeights)
 		
