@@ -14,13 +14,16 @@ class Variable():
 		self.var2 = deepcopy(var);
 
 	def assertEquals(self):
-		if(var1 != var2)
+		if(self.var1.__dict__ != self.var2.__dict__)
 			raise MemoryDuplicationException(str(self.var1) + 'does not equal ' + str(self.var2))
 	
 	
+	def equateObjects(self,other)
+		return self.__dict__ == other.__dict__
+		
 	def assign(self, argument):
 		var1 = argument;
-		var2 = argument;		
+		var2 = deepcopy(argument);		
 		self.assertEquals()
 
 	def __str__(self):
