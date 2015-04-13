@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class MemoryDuplicationException(Exception):
 	def __init__(self,val):
 		self.value = val
@@ -9,7 +11,7 @@ class Variable():
 
 	def __init__(self, var):
 		self.var1 = var;
-		self.var2 = var;
+		self.var2 = deepcopy(var);
 
 	def assertEquals(self):
 		if(var1 != var2)
