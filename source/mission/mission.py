@@ -62,3 +62,30 @@ def mission():
 if __name__ == '__main__':
 	buildControlGraph()
 	mission()
+
+
+class Mission():
+	def __init__(self):
+		self.motors = MotorDriver()
+		self.colorSensor = ColorSensor()
+		self.direction = Direction()
+		self.server = PiServer()
+		self.server.keyExchange()
+
+		self.target = 'blue'
+
+		atexit.register(motors.turnOff)
+
+	def run(self):
+		sensorData = __assign__(None, direction.sensorRead())
+		colorReading = __assign__(None, colorSensor.readColor())
+		color = __assign(colorSensor.distance(colorReading)
+		
+
+	def __assign__(self, *args, fnc):
+		return [fnc(*args), fnc(*args)]
+
+	def __call__(self, ):
+
+	def __assert__(self, var):
+		assert(var[0], var[1])
