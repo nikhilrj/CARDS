@@ -52,6 +52,10 @@ class PiServer():
 	   		return decryptedMessage.lower()
 
 
+	def __eq__(self, other):
+		return self.__dict__ == other.__dict__
+		
+
 if __name__ == '__main__':
 	server = PiServer()
 	server.keyExchange()

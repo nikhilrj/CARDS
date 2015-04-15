@@ -19,50 +19,6 @@ def buildControlGraph():
 
 	print CFC
 
-def mission():
-	motors = MotorDriver()
-	colorSensor = ColorSensor()
-	direction = Direction()
-	server = PiServer()
-	server.keyExchange()
-
-	target = 'blue'
-
-	atexit.register(motors.turnOff)
-	
-	print 'starting this shit'
-	while(True):
-		#Make calls to other files
-
-		sensorData = direction.sensorRead()
-		colorReading = colorSensor.readColor()
-		color = colorSensor.distance(colorReading)
-		try:
-			inp = server.operation()
-			if inp != None:
-				target = inp
-		except Exception, e:
-			raise e
-
-		print target, color, colorReading, sensorData
-
-		if color == target:
-			print 'found target, exiting'
-			exit()
-		else:	
-
-			try:
-				[lSpeed, rSpeed, lDir, rDir] = direction.calcWeights(sensorData)
-				motors.drive(lSpeed, rSpeed, lDir, rDir)
-			except ZeroDivisionError as e:
-				#print e
-				2+2
-				#motors.turnOff()
-			
-if __name__ == '__main__':
-	buildControlGraph()
-	mission()
-
 
 class Mission():
 	def __init__(self):
@@ -76,16 +32,52 @@ class Mission():
 
 		atexit.register(motors.turnOff)
 
-	def run(self):
-		sensorData = __assign__(None, direction.sensorRead())
-		colorReading = __assign__(None, colorSensor.readColor())
-		color = __assign(colorSensor.distance(colorReading)
+	def run(self, mission2):
+		#Hardware reads
+		sensorData = self.direction.sensorRead()
+		colorReading = self.colorSensor.readColor()
+
+
+		color = __assign__(self.colorSensor.distance(colorReading))
+
+		serverInput = self.server.operation()
+		if serverInput != None:
+			self.target = serverInput
+
+		if color == self.target:
+			#color handle
+			exit()
 		
+		[lSpeed, rSpeed, lDir, rDir] = __assign__(self.direction.calcWeights(sensorData))
+		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
 	def __assign__(self, *args, fnc):
-		return [fnc(*args), fnc(*args)]
-
-	def __call__(self, ):
+		call = [fnc(*args), fnc(*args)]
+		if __assert__(call):
+			return call[0]
 
 	def __assert__(self, var):
-		assert(var[0], var[1])
+		assert(var[0] == var[1])
+
+	def __eq__(self, other):
+		return self.__dict__ == other.__dict__
+
+			
+if __name__ == '__main__':
+	buildControlGraph()
+	mission = Variable(Mission())
+
+	while(True):
+		try:
+			mission.member.run()
+		except ZeroDivisionError, e:
+			pass
+		except (MemoryDuplicationException, ControlFlowException), e:
+			pass
+		except Exception, e:
+			print e
+			raise e
+
+	mission.assertEquals()
+
+

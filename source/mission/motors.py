@@ -40,3 +40,7 @@ class MotorDriver():
 		self.bl.run(lDir)
 		self.fr.run(rDir)
 		self.br.run(rDir)
+
+	def __eq__(self, other):
+		return self.__dict__ == other.__dict__
+		
