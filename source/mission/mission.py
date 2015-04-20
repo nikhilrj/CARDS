@@ -13,9 +13,9 @@ def buildControlGraph():
 	global CFC
 	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights])
 	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
-	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor])
+	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor, ColorSensor.distance])
 	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
-	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation])
+	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation, Direction.calcWeights])
 	CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights])
 
 	print CFC
@@ -38,9 +38,8 @@ class Mission():
 		sensorData = self.direction.sensorRead()
 		colorReading = self.colorSensor.readColor()
 
-
-		color = self.__assign__(self.colorSensor.distance(colorReading))
-
+		color = self.__assign__(self.colorSensor.distance, colorReading)
+	
 		serverInput = self.server.operation()
 		if serverInput != None:
 			self.target = serverInput
@@ -49,7 +48,7 @@ class Mission():
 			#color handle
 			exit()
 		
-		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights(sensorData))
+		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights, sensorData)
 		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
 	def __assign__(self, fnc, *args):
@@ -58,7 +57,10 @@ class Mission():
 			return call[0]
 
 	def __assert__(self, var):
-		assert(var[0] == var[1])
+		if var[0] == var[1]:
+			return True
+		else:
+			return False
 
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
@@ -70,15 +72,18 @@ if __name__ == '__main__':
 
 	while(True):
 		try:
+		#mission.run()
 			mission.member().run()
 		except ZeroDivisionError, e:
+			#print e
 			pass
-		except (MemoryDuplicationException, ControlFlowException), e:
-			pass
-		except Exception, e:
-			print e
-			raise e
+		#except (MemoryDuplicationException, ControlFlowException), e:
+		#	print e
+		#	pass
+		#except Exception, e:
+		#	print e
+		#	raise e
 
-	mission.assertEquals()
+	#mission.assertEquals()
 
 
