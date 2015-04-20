@@ -53,3 +53,8 @@ class Direction():
 			rSpeed = 0
 
 		return [lSpeed, rSpeed, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.FORWARD]
+
+
+	def __eq__(self, other):
+		return self.__dict__ == other.__dict__
+		
