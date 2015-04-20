@@ -1,4 +1,5 @@
 from copy import deepcopy
+import random
 
 class MemoryDuplicationException(Exception):
 	def __init__(self,val):
@@ -14,7 +15,10 @@ class Variable():
 		self.var2 = deepcopy(var);
 
 	def member(self):
-		return self.var1
+		if random.random() > 0.5:
+			return self.var1
+		else: 
+			return self.var2
 
 	def assertEquals(self):
 		if(self.var1 != self.var2)

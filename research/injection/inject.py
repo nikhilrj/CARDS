@@ -11,7 +11,9 @@ def a():
 if __name__ == '__main__':
 	a()
 	b = test()
-	b.doStuff()
+
+	print b.__dict__
+	#b.doStuff()
 	#print dir(), locals(), globals()
 
 
