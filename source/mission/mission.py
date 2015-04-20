@@ -51,7 +51,7 @@ class Mission():
 		[lSpeed, rSpeed, lDir, rDir] = __assign__(self.direction.calcWeights(sensorData))
 		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
-	def __assign__(self, *args, fnc):
+	def __assign__(self, fnc, *args):
 		call = [fnc(*args), fnc(*args)]
 		if __assert__(call):
 			return call[0]
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
 	while(True):
 		try:
-			mission.member.run()
+			mission.member().run()
 		except ZeroDivisionError, e:
 			pass
 		except (MemoryDuplicationException, ControlFlowException), e:
