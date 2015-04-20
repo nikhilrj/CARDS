@@ -1,5 +1,6 @@
 #Mission.py handles all overhead mission operation
 from control import *
+from variable import *
 
 from motors import *
 from color import *
@@ -30,15 +31,15 @@ class Mission():
 
 		self.target = 'blue'
 
-		atexit.register(motors.turnOff)
+		atexit.register(self.motors.turnOff)
 
-	def run(self, mission2):
+	def run(self):
 		#Hardware reads
 		sensorData = self.direction.sensorRead()
 		colorReading = self.colorSensor.readColor()
 
 
-		color = __assign__(self.colorSensor.distance(colorReading))
+		color = self.__assign__(self.colorSensor.distance(colorReading))
 
 		serverInput = self.server.operation()
 		if serverInput != None:
@@ -48,12 +49,12 @@ class Mission():
 			#color handle
 			exit()
 		
-		[lSpeed, rSpeed, lDir, rDir] = __assign__(self.direction.calcWeights(sensorData))
+		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights(sensorData))
 		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
 	def __assign__(self, fnc, *args):
 		call = [fnc(*args), fnc(*args)]
-		if __assert__(call):
+		if self.__assert__(call):
 			return call[0]
 
 	def __assert__(self, var):

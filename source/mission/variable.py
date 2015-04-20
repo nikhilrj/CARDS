@@ -21,7 +21,7 @@ class Variable():
 			return self.var2
 
 	def assertEquals(self):
-		if(self.var1 != self.var2)
+		if(self.var1 != self.var2):
 			raise MemoryDuplicationException(str(self.var1) + 'does not equal ' + str(self.var2))
 
 	def __str__(self):

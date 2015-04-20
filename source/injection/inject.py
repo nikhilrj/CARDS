@@ -5,7 +5,7 @@ global mission
 var = mission.member()
 
 #call random function
-functions = [var.direction.sensorRead(), var.colorSensor.readColor(), var.colorSensor.distance(), var.motors.drive()]
+functions = [var.direction.sensorRead, var.colorSensor.readColor, var.colorSensor.distance, var.motors.drive]
 rand = random.randint(0, len(functions))
 functions[rand]()
 
