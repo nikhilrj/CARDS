@@ -9,36 +9,20 @@ from control import *
 
 class PiServer():
 
-	def __init__(self, Ip = '127.0.0.1', port = 1337, sz = 2048, keySz = 256):
-		self.testIP = Ip
-		self.portListen = port
-		self.size = sz
-		self.bitKeySize = keySz
-
-		server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		server.bind((self.testIP, self.portListen))
-		server.listen(1)
-		print dir()
-		#print locals()
-		#for i in locals().keys():
-		#	if isinstance(locals()[i], PiServer):
-		#		print locals()[i]
-		self.conn, self.client_addr = server.accept()
-
-		print 'Connected to Client.'
+	#def __init__(self, Ip = '127.0.0.1', port = 1337, sz = 2048, keySz = 256):
 
 	### Process of generating a public and private key ###
 
 	def keyExchange(self):
 
-		(pubKey, self.privKey) = rsa.newkeys(self.bitKeySize)
+		(pubKey, privKey) = rsa.newkeys(bitKeySize)
 		pubKeyN = pubKey.n
 		pubKeyE = pubKey.e
 		pubKeyN = str(pubKeyN)
 		pubKeyE = str(pubKeyE)
-		self.conn.send(pubKeyN)
+		conn.send(pubKeyN)
 		time.sleep(1)
-		self.conn.send(pubKeyE)
+		conn.send(pubKeyE)
 
 		print 'Client Public key sent.'
 
@@ -46,9 +30,9 @@ class PiServer():
 		global CFC
 		CFC.update(PiServer.operation)
 
-		if select.select([self.conn], [], [], 0)[0]:
-			encryptedMessage = self.conn.recv(self.size)
-			decryptedMessage = rsa.decrypt(encryptedMessage, self.privKey)
+		if select.select([conn], [], [], 0)[0]:
+			encryptedMessage = conn.recv(size)
+			decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
 	   		return decryptedMessage.lower()
 
 
@@ -61,3 +45,16 @@ if __name__ == '__main__':
 	server.keyExchange()
 	while True:
 		print server.serverOperation()
+
+
+testIP = '127.0.0.1'
+portListen = 1337
+size = 2048
+bitKeySize = 256
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind((testIP, portListen))
+server.listen(1)
+
+conn, client_addr = server.accept()
+
+print 'Connected to Client.'

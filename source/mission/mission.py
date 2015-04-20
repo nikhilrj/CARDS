@@ -69,10 +69,12 @@ class Mission():
 if __name__ == '__main__':
 	buildControlGraph()
 	mission = Variable(Mission())
+	#mission = Mission()
+	#mission.member().colorSensor.connect()
 
 	while(True):
 		try:
-		#mission.run()
+			#mission.run()
 			mission.member().run()
 		except ZeroDivisionError, e:
 			#print e

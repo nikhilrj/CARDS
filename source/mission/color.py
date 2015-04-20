@@ -11,29 +11,25 @@ import smbus, time
 
 from control import *
 
-
 class ColorSensor():
 #class for encapsulating color operations
 
 	def __init__(self, whiteThreshold = 35000, blackThreshold = 9000):
-		self.bus = smbus.SMBus(1);
-		self.i2cAdr = 0x29;
 		self.blackThreshold = blackThreshold;
 		self.whiteThreshold = whiteThreshold;
-		self.bus.write_byte(self.i2cAdr,0x80|0x12)
-		ver = self.bus.read_byte(self.i2cAdr)
 
-		if ver == 0x44:
-			print "Device found\n"
-			self.bus.write_byte(self.i2cAdr, 0x80|0x00) # 0x00 = ENABLE register
-			self.bus.write_byte(self.i2cAdr, 0x01|0x02) # 0x01 = Power on, 0x02 RGB sensors enabled
-			self.bus.write_byte(self.i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB
+	_instance = None
+	def __new__(cls, *args, **kwargs):
+		if not cls._instance:
+			cls._instance = super(ColorSensor, cls).__new__(cls, *args, **kwargs)
+		return cls._instance
+
 
 	def readColor(self):
 		global CFC
 		CFC.update(ColorSensor.readColor)
 		
-		data = self.bus.read_i2c_block_data(self.i2cAdr, 0)
+		data = bus.read_i2c_block_data(i2cAdr, 0)
 		clear = clear = data[1] << 8 | data[0]
 		red = data[3] << 8 | data[2]
 		green = data[5] << 8 | data[4]
@@ -62,4 +58,18 @@ class ColorSensor():
 
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
-		
+	
+	def __repr__(self):
+		return self.__dict__.__str__()
+
+
+bus = smbus.SMBus(1);
+i2cAdr = 0x29;
+bus.write_byte(i2cAdr,0x80|0x12)
+ver = bus.read_byte(i2cAdr)
+
+if ver == 0x44:
+	print "Color Reader Device found\n"
+	bus.write_byte(i2cAdr, 0x80|0x00) # 0x00 = ENABLE register
+	bus.write_byte(i2cAdr, 0x01|0x02) # 0x01 = Power on, 0x02 RGB sensors enabled
+	bus.write_byte(i2cAdr, 0x80|0x14) # Reading results start register 14, LSB then MSB

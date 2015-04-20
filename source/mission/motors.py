@@ -3,21 +3,11 @@ import RPi.GPIO as GPIO
 
 from control import *
 
-
-mh = Adafruit_MotorHAT(addr=0x60)
-
 class MotorDriver():
 	baseSpeed = 50
 
 	def __init__(self, spd = 96):			
 		baseSpeed = spd
-
-		self.fl = mh.getMotor(1)
-		self.fr = mh.getMotor(2)
-		self.bl = mh.getMotor(3)
-		self.br = mh.getMotor(4)
-
-		self.motors = [self.fl, self.fr, self.bl, self.br]
 		
 	def turnOff(self):
 		#global CFC
@@ -31,16 +21,23 @@ class MotorDriver():
 		global CFC
 		CFC.update(MotorDriver.drive)
 		
-		self.fl.setSpeed(lSpeed)
-		self.bl.setSpeed(lSpeed)
-		self.fr.setSpeed(rSpeed)
-		self.br.setSpeed(rSpeed)
+		fl.setSpeed(lSpeed)
+		bl.setSpeed(lSpeed)
+		fr.setSpeed(rSpeed)
+		br.setSpeed(rSpeed)
 
-		self.fl.run(lDir)
-		self.bl.run(lDir)
-		self.fr.run(rDir)
-		self.br.run(rDir)
+		fl.run(lDir)
+		bl.run(lDir)
+		fr.run(rDir)
+		br.run(rDir)
 
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
+
+mh = Adafruit_MotorHAT(addr=0x60)
+
+fl = mh.getMotor(1)
+fr = mh.getMotor(2)
+bl = mh.getMotor(3)
+br = mh.getMotor(4)
 		
