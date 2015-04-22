@@ -34,6 +34,9 @@ class MotorDriver():
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 
+	def __repr__(self):
+		return self.__dict__.__str__()
+
 mh = Adafruit_MotorHAT(addr=0x60)
 
 fl = mh.getMotor(1)

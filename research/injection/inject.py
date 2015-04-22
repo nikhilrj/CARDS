@@ -1,6 +1,9 @@
 import inspect
 from test import *
-from test2 import *
+import sys
+
+
+#from test2 import *
 g=322
 
 def a():
@@ -13,6 +16,13 @@ if __name__ == '__main__':
 	b = test()
 
 	print b.__dict__
+
+	for i in globals().keys():
+		#print i, globals()[i]
+		print i, globals()[i], sys.getsizeof(globals()[i])
+
+	for i in locals().keys():
+		print i, locals()[i], sys.getsizeof(locals()[i])
 	#b.doStuff()
 	#print dir(), locals(), globals()
 

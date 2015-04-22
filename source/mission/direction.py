@@ -59,3 +59,5 @@ class Direction():
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 		
+	def __repr__(self):
+		return self.__dict__.__str__()

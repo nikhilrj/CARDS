@@ -65,10 +65,13 @@ class Mission():
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 
+	def __repr__(self):
+		return self.__dict__.__str__()
 			
 if __name__ == '__main__':
+	global mission
 	buildControlGraph()
-	mission = Variable(Mission())
+	print os.getpid()
 	#mission = Mission()
 	#mission.member().colorSensor.connect()
 
@@ -76,16 +79,16 @@ if __name__ == '__main__':
 		try:
 			#mission.run()
 			mission.member().run()
+			mission.assertEquals()
 		except ZeroDivisionError, e:
 			#print e
 			pass
-		#except (MemoryDuplicationException, ControlFlowException), e:
-		#	print e
-		#	pass
+		except (MemoryDuplicationException, ControlFlowException), e:
+			print e
+			pass
 		#except Exception, e:
 		#	print e
 		#	raise e
 
-	#mission.assertEquals()
 
 

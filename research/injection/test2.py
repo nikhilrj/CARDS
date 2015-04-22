@@ -8,12 +8,12 @@ class b():
 		self.c += 1
 
 	def __eq__(self, other):
-		return self.c==other.c
+		return self.__dict__ == other.__dict__
 
-	#def __repr__(self):
-	#	return str(self.c)
+	def __repr__(self):
+		return self.__dict__.__str__()
 
-class test2():
+class c():
 	def __init__(self):
 		self.a=3
 		self.b = b()
@@ -24,9 +24,12 @@ class test2():
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 abcd = 2332
 
-t2 = test2()
+t2 = c()
 t2c = copy.deepcopy(t2)
 
 

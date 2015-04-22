@@ -1,4 +1,5 @@
 from copy import deepcopy
+import mission
 import random
 
 class MemoryDuplicationException(Exception):
@@ -22,7 +23,9 @@ class Variable():
 
 	def assertEquals(self):
 		if(self.var1 != self.var2):
-			raise MemoryDuplicationException(str(self.var1) + 'does not equal ' + str(self.var2))
+			raise MemoryDuplicationException(str(self.var1) + '\ndoes not equal\n' + str(self.var2))
 
 	def __str__(self):
 		return ('var1: '+ str(self.var1) + '\n' + 'var2: '+ str(self.var2))
+
+mission = Variable(mission.Mission())

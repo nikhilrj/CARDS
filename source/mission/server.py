@@ -15,7 +15,7 @@ class PiServer():
 
 	def keyExchange(self):
 
-		(pubKey, privKey) = rsa.newkeys(bitKeySize)
+		(pubKey, self.privKey) = rsa.newkeys(bitKeySize)
 		pubKeyN = pubKey.n
 		pubKeyE = pubKey.e
 		pubKeyN = str(pubKeyN)
@@ -32,13 +32,15 @@ class PiServer():
 
 		if select.select([conn], [], [], 0)[0]:
 			encryptedMessage = conn.recv(size)
-			decryptedMessage = rsa.decrypt(encryptedMessage, privKey)
+			decryptedMessage = rsa.decrypt(encryptedMessage, self.privKey)
 	   		return decryptedMessage.lower()
 
 
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
-		
+
+	def __repr__(self):
+		return self.__dict__.__str__()		
 
 if __name__ == '__main__':
 	server = PiServer()

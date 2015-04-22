@@ -1,8 +1,13 @@
 import inspect
-from test2 import *
+import sys
+
+#from test2 import *
 class test():
 	def __init__(self):
 		self.a = 2
+		print self
+		print sys.getsizeof(self)
+
 
 	def doStuff(self):
 		print 'hello'
