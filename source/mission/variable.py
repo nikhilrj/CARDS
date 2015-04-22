@@ -11,21 +11,41 @@ class MemoryDuplicationException(Exception):
 
 class Variable():
 
-	def __init__(self, var):
-		self.var1 = var;
-		self.var2 = deepcopy(var);
+	def __init__(self, var, copies = 5):
+		self.var = []
+		self.copies = copies
+		for i in xrange(0, copies):
+			self.var.append(deepcopy(self.var))
 
 	def member(self):
-		if random.random() > 0.5:
-			return self.var1
-		else: 
-			return self.var2
+		return self.var[random.randint(0, self.copies - 1)]
 
 	def assertEquals(self):
-		if(self.var1 != self.var2):
-			raise MemoryDuplicationException(str(self.var1) + '\ndoes not equal\n' + str(self.var2))
+		self.equalities = {}
+		for i in xrange(0, self.copies):
+			try:
+				self.equalities[self.var[i]] += 1
+			except Exception, e:
+				self.equalities[self.var[i]] = 1
+
+		if len(self.equalities.keys())
+			raise new MemoryDuplicationException('Memory Corruption Error ' + self.equalities.__str__())
+
+	def leaderElect(self):
+		votes = 0
+		leader = None
+		
+		for i in self.equalities.keys():
+			if self.equalities[i] > votes:
+				votes = self.equalities[i]
+				leader = i
+
+		for i in xrange(0, self.copies):
+			if var[i] != leader:
+				var[i] = deepcopy(leader)
 
 	def __str__(self):
-		return ('var1: '+ str(self.var1) + '\n' + 'var2: '+ str(self.var2))
+		return str(self.var)
+
 
 mission = Variable(mission.Mission())

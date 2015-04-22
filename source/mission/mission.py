@@ -55,6 +55,8 @@ class Mission():
 		call = [fnc(*args), fnc(*args)]
 		if self.__assert__(call):
 			return call[0]
+		else:
+			raise MemoryDuplicationException(str(fnc) + ' produced conflicting output')
 
 	def __assert__(self, var):
 		if var[0] == var[1]:
@@ -65,8 +67,14 @@ class Mission():
 	def __eq__(self, other):
 		return self.__dict__ == other.__dict__
 
+	def __ne__(self, other):
+		return not self.__eq__(other)
+
 	def __repr__(self):
 		return self.__dict__.__str__()
+
+	def __hash__(self):
+		return self.__dict__.__hash__()
 			
 if __name__ == '__main__':
 	global mission
@@ -81,11 +89,14 @@ if __name__ == '__main__':
 			mission.member().run()
 			mission.assertEquals()
 		except ZeroDivisionError, e:
-			#print e
-			pass
-		except (MemoryDuplicationException, ControlFlowException), e:
 			print e
 			pass
+		except ControlFlowException, e:
+			print e
+			pass
+		except MemoryDuplicationException, e:
+			print e
+			exit()
 		#except Exception, e:
 		#	print e
 		#	raise e
