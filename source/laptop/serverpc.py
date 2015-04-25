@@ -5,8 +5,8 @@ import sys
 import rsa
 
 # Settings for the client
-broadcastIP = '127.0.0.1'		 # IP address to send to, 255 in one or more positions is a broadcast / wild-card
-broadcastPort = 1337					# What message number to send with (LEDB on an LCD)
+broadcastIP = '192.168.0.102'		 # IP address to send to, 255 in one or more positions is a broadcast / wild-card
+broadcastPort = 9038					# What message number to send with (LEDB on an LCD)
 interval = 0.1						# Time between keyboard updates in seconds, smaller responds faster but uses more processor time
 regularUpdate = False					# If True we send a command at a regular interval, if False we only send commands when keys are pressed or released
 size = 2048
