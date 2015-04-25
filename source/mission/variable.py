@@ -15,7 +15,8 @@ class Variable():
 		self.var = []
 		self.copies = copies
 		for i in xrange(0, copies):
-			self.var.append(deepcopy(self.var))
+			self.var.append(deepcopy(var))
+		#print self.var
 
 	def member(self):
 		return self.var[random.randint(0, self.copies - 1)]
@@ -28,8 +29,8 @@ class Variable():
 			except Exception, e:
 				self.equalities[self.var[i]] = 1
 
-		if len(self.equalities.keys())
-			raise new MemoryDuplicationException('Memory Corruption Error ' + self.equalities.__str__())
+		if len(self.equalities.keys()) > 1:
+			raise MemoryDuplicationException('Memory Corruption Error ' + self.equalities.__str__())
 
 	def leaderElect(self):
 		votes = 0
@@ -41,8 +42,8 @@ class Variable():
 				leader = i
 
 		for i in xrange(0, self.copies):
-			if var[i] != leader:
-				var[i] = deepcopy(leader)
+			if self.var[i] != leader:
+				self.var[i] = deepcopy(leader)
 
 	def __str__(self):
 		return str(self.var)

@@ -39,6 +39,9 @@ class Direction():
 			if i > 0:
 				numActive+=1
 
+		if numActive <= 0:
+			return [0, 0, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE]
+
 		dot = 0
 		for i in xrange(0, len(weights)):
 			dot += weights[i] * sensorData[i]

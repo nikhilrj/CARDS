@@ -74,7 +74,7 @@ class Mission():
 		return self.__dict__.__str__()
 
 	def __hash__(self):
-		return self.__dict__.__hash__()
+		return self.__repr__().__hash__()
 			
 if __name__ == '__main__':
 	global mission
@@ -88,15 +88,17 @@ if __name__ == '__main__':
 			#mission.run()
 			mission.member().run()
 			mission.assertEquals()
-		except ZeroDivisionError, e:
-			print e
-			pass
+		#except ZeroDivisionError, e:
+		#	print e
+		#	pass
 		except ControlFlowException, e:
 			print e
 			pass
 		except MemoryDuplicationException, e:
 			print e
-			exit()
+			#exit()
+			mission.leaderElect()
+			print 'Memory corruption fixed by CARDS'
 		#except Exception, e:
 		#	print e
 		#	raise e
