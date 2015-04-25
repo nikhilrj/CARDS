@@ -49,8 +49,8 @@ if __name__ == '__main__':
 		print server.serverOperation()
 
 
-testIP = '127.0.0.1'
-portListen = 1337
+testIP = '192.168.0.102'
+portListen = 9038
 size = 2048
 bitKeySize = 256
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
