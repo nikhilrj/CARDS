@@ -3,6 +3,7 @@ import time
 import miniRSA
 import sys
 import rsa
+import threading
 
 # Settings for the client
 broadcastIP = '192.168.0.102'		 # IP address to send to, 255 in one or more positions is a broadcast / wild-card
@@ -29,7 +30,19 @@ pubKey = rsa.PublicKey(pubKeyN,pubKeyE)
 
 print 'Public Key received from server.'
 
+
+
+def worker():
+	while(True):
+		print(sender.recv(size))
+	
+	
+	
 time.sleep(2)
+
+#set thread for receiving message
+t = threading.Thread(target=worker) 
+t.start()
 
 try:
 	while(True):
@@ -46,4 +59,5 @@ try:
 		#sender.sendto('ALLOFF', (broadcastIP, broadcastPort))
 except KeyboardInterrupt:
 	sender.sendto('ALLOFF', (broadcastIP, broadcastPort))
+	
 	
