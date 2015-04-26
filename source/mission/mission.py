@@ -80,23 +80,16 @@ if __name__ == '__main__':
 	global mission
 	buildControlGraph()
 	print os.getpid()
-	#mission = Mission()
-	#mission.member().colorSensor.connect()
 
 	while(True):
 		try:
-			#mission.run()
 			mission.member().run()
 			mission.assertEquals()
-		#except ZeroDivisionError, e:
-		#	print e
-		#	pass
 		except ControlFlowException, e:
-			print e
+			mission.member().server.send(e)
 			pass
 		except MemoryDuplicationException, e:
-			print e
-			#exit()
+			mission.member().server.send(e)]
 			mission.leaderElect()
 			print 'Memory corruption fixed by CARDS'
 		#except Exception, e:
