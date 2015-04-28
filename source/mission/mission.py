@@ -10,6 +10,9 @@ from direction import *
 import os, atexit, time, atexit
 from collections import Counter
 
+from pycallgraph import GlobbingFilter, Config, PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 def buildControlGraph():
 	global CFC
 	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights, PiServer.operation])
@@ -101,25 +104,32 @@ if __name__ == '__main__':
 
 	sys.excepthook = cfcexcepthook
 
-	while(True):
-		try:
-			mission.member().run()
-			mission.assertEquals()
-		except ZeroDivisionError, e:
-		#	print e
-			pass
-		#except ControlFlowException, e:
-		#	mission.member().server.send(e)
-		#	print 'Control flow exception detected'
-		#	pass
-		except MemoryDuplicationException, e:
-			mission.member().server.send(e)
-			mission.leaderElect()
-			print 'Memory corruption fixed by CARDS'
-		#except Exception, e:
-		#	mission.member().server.send(e)
-		#	print e
-		#	raise e
+	config = Config()
+	config.trace_filter = GlobbingFilter(exclude = ['pycallgraph.*', 'collections.*', 'heapq.*', 'abc.*', '_weakrefset', 'random.*', '*.__repr__', '*.__eq__', 'copy.*'])
+	
+	graphviz = GraphvizOutput()
+	graphviz.output_file = 'callGraph.png'
+	
+	with PyCallGraph(output=graphviz, config=config):
+		while(True):
+			try:
+				mission.member().run()
+				mission.assertEquals()
+			except ZeroDivisionError, e:
+			#	print e
+				pass
+			#except ControlFlowException, e:
+			#	mission.member().server.send(e)
+			#	print 'Control flow exception detected'
+			#	pass
+			except MemoryDuplicationException, e:
+				mission.member().server.send(e)
+				mission.leaderElect()
+				print 'Memory corruption fixed by CARDS'
+			except Exception, e:
+				mission.member().server.send(e)
+				print e
+				raise e
 
 
 
