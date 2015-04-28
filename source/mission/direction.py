@@ -28,7 +28,7 @@ class Direction():
 
 		return [GPIO.input(4), GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
 
-	def calcWeights(self, sensorData, c=32, baseSpeed = 64):
+	def calcWeights(self, sensorData, c=16, baseSpeed = 48, clr = 'black'):
 		global CFC
 		CFC.update(Direction.calcWeights)
 		
@@ -39,8 +39,12 @@ class Direction():
 			if i > 0:
 				numActive+=1
 
-		if numActive <= 0:
-			return [0, 0, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE]
+		#if numActive <= 0:
+			#return [0, 0, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE]
+		
+		if clr not in [ 'black', 'white', '']:
+			#print clr
+			c = 0		
 
 		dot = 0
 		for i in xrange(0, len(weights)):

@@ -29,3 +29,4 @@ class ControlFlowControl():
 		return (str(self.prevState) + ' ' + str(self.graph))
 
 CFC = ControlFlowControl()
+target = 'blue'

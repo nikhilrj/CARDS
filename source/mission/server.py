@@ -33,6 +33,7 @@ class PiServer():
 		if select.select([conn], [], [], 0)[0]:
 			encryptedMessage = conn.recv(size)
 			decryptedMessage = rsa.decrypt(encryptedMessage, self.privKey)
+			print decryptedMessage.lower()
 			return decryptedMessage.lower()
 
 	def send(self, msg):

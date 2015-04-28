@@ -35,6 +35,7 @@ print 'Public Key received from server.'
 def worker():
 	while(True):
 		print(sender.recv(size))
+		exit()
 	
 	
 	

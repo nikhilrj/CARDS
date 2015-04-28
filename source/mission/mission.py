@@ -11,7 +11,7 @@ import os, atexit, time, atexit
 
 def buildControlGraph():
 	global CFC
-	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights])
+	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights, PiServer.operation])
 	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
 	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor, ColorSensor.distance])
 	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
@@ -29,11 +29,10 @@ class Mission():
 		self.server = PiServer()
 		self.server.keyExchange()
 
-		self.target = 'blue'
-
 		atexit.register(self.motors.turnOff)
 
 	def run(self):
+		global target
 		#Hardware reads
 		sensorData = self.direction.sensorRead()
 		colorReading = self.colorSensor.readColor()
@@ -42,17 +41,19 @@ class Mission():
 	
 		serverInput = self.server.operation()
 		if serverInput != None:
-			self.target = serverInput
+			target = serverInput
 
-		if color == self.target:
+		if color == target:
+			print 'Found target ', target, color
 			#color handle
-			exit()
-		
-		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights, sensorData)
+			self.motors.turnOff()
+			return
+		print target,color, sensorData, colorReading
+		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights, sensorData, clr=color)
 		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
-	def __assign__(self, fnc, *args):
-		call = [fnc(*args), fnc(*args)]
+	def __assign__(self, fnc, *args, **kwargs):
+		call = [fnc(*args, **kwargs), fnc(*args, **kwargs)]
 		if self.__assert__(call):
 			return call[0]
 		else:
@@ -75,26 +76,43 @@ class Mission():
 
 	def __hash__(self):
 		return self.__repr__().__hash__()
+
+def cfcexcepthook(exctype, value, traceback):
+	if exctype == ControlFlowException:
+		global mission
+		mission.member().server.send(value)
+		print 'Control flow exception detected'
+	else:
+		sys.__excepthook__(exctype, value, traceback)
+
 			
 if __name__ == '__main__':
 	global mission
+
 	buildControlGraph()
 	print os.getpid()
+
+	sys.excepthook = cfcexcepthook
 
 	while(True):
 		try:
 			mission.member().run()
 			mission.assertEquals()
-		except ControlFlowException, e:
-			mission.member().server.send(e)
+		except ZeroDivisionError, e:
+		#	print e
 			pass
+		#except ControlFlowException, e:
+		#	mission.member().server.send(e)
+		#	print 'Control flow exception detected'
+		#	pass
 		except MemoryDuplicationException, e:
-			mission.member().server.send(e)]
+			mission.member().server.send(e)
 			mission.leaderElect()
 			print 'Memory corruption fixed by CARDS'
-		#except Exception, e:
-		#	print e
-		#	raise e
+		except Exception, e:
+			mission.member().server.send(e)
+			print e
+			raise e
 
 
 
