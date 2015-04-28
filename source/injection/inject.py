@@ -1,5 +1,31 @@
 from variable import *
-import random
+import random, time
+
+def runCircle():
+	var.motors.drive(100, 100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.FORWARD)
+
+def runCircle2():
+	var.motors.drive(100, 100, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.BACKWARD)
+
+def runFWBW():
+	var.motors.drive(50, 50, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.FORWARD)
+	time.sleep(.5)
+	var.motors.drive(50, 50, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.BACKWARD)
+	time.sleep(.5)
+	var.motors.drive(50, 50, Adafruit_MotorHAT.FORWARD, Adafruit_MotorHAT.FORWARD)
+	time.sleep(.5)
+	var.motors.drive(50, 50, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.BACKWARD)
+	time.sleep(.5)
+	var.motors.drive(50, 50, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE)
+
+
+def injectMemory(dic):
+	for i in dic.keys():
+		if isinstance(dic[i], dict):
+			injectMemory(dic[i])
+		if isinstance(dic[i], (int, float)):
+			if random.random() > 0.95:
+				dic[i] ^= (1 << random.randint(0, 32))
 
 global mission
 var = mission.member()
@@ -7,15 +33,6 @@ var = mission.member()
 #call random function
 functions = [var.direction.sensorRead, var.colorSensor.readColor, var.colorSensor.distance, var.motors.drive]
 rand = random.randint(0, len(functions))
-functions[rand]()
+#functions[rand]()
 
-#change random variable
-for i in var.__dict__.keys():
-	if isinstance(var.__dict__[i], int):
-		j = random.randint(0, 32)
-		var.__dict__[i] ^= (1 << j)
-
-for i in locals().keys():
-	if isinstance(locals()[i], int):
-		j = random.randint(0, 32)
-		locals()[i] ^= (1 << j)
+injectMemory(var)
