@@ -26,13 +26,17 @@ class Direction():
 		#print CFC
 		CFC.update(Direction.sensorRead)
 
-		return [GPIO.input(4), GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
+		#return [GPIO.input(4), GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
+		#return [GPIO.input(17), GPIO.input(18), GPIO.input(23), GPIO.input(24)]
+		return [GPIO.input(17), GPIO.input(18), GPIO.input(24)]
 
 	def calcWeights(self, sensorData, c=16, baseSpeed = 48, clr = 'black'):
 		global CFC
 		CFC.update(Direction.calcWeights)
 		
-		weights = [-8, -2, 0, 0, 2, 8]
+		#weights = [-8, -2, 0, 0, 2, 8]
+		#weights = [-8, -4, 4, 8]
+		weights = [-6, 0, 6]
 
 		numActive = 0
 		for i in sensorData:

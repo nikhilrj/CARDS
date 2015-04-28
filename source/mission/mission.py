@@ -8,11 +8,12 @@ from server import *
 from direction import *
 
 import os, atexit, time, atexit
+from collections import Counter
 
 def buildControlGraph():
 	global CFC
 	CFC.buildGraph(Direction.sensorRead, [None, MotorDriver.drive, Direction.calcWeights, PiServer.operation])
-	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead]) 
+	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead, ColorSensor.readColor, ColorSensor.distance]) 
 	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor, ColorSensor.distance])
 	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
 	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation, Direction.calcWeights])
@@ -35,9 +36,15 @@ class Mission():
 		global target
 		#Hardware reads
 		sensorData = self.direction.sensorRead()
-		colorReading = self.colorSensor.readColor()
 
-		color = self.__assign__(self.colorSensor.distance, colorReading)
+		#colorReading = self.colorSensor.readColor()
+		#color = self.__assign__(self.colorSensor.distance, colorReading)
+		colorReadings = []
+		for i in xrange(0,5):
+			#print self.colorSensor.readColor()
+			colorReadings.append(self.colorSensor.distance(self.colorSensor.readColor()))
+
+		color = Counter(colorReadings).most_common(1)[0][0]
 	
 		serverInput = self.server.operation()
 		if serverInput != None:
@@ -48,7 +55,7 @@ class Mission():
 			#color handle
 			self.motors.turnOff()
 			return
-		print target,color, sensorData, colorReading
+		#print target,color, sensorData# colorReadings
 		[lSpeed, rSpeed, lDir, rDir] = self.__assign__(self.direction.calcWeights, sensorData, clr=color)
 		self.motors.drive(lSpeed, rSpeed, lDir, rDir)
 
@@ -109,10 +116,10 @@ if __name__ == '__main__':
 			mission.member().server.send(e)
 			mission.leaderElect()
 			print 'Memory corruption fixed by CARDS'
-		except Exception, e:
-			mission.member().server.send(e)
-			print e
-			raise e
+		#except Exception, e:
+		#	mission.member().server.send(e)
+		#	print e
+		#	raise e
 
 
 

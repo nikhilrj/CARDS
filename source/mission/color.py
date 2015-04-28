@@ -14,7 +14,7 @@ from control import *
 class ColorSensor():
 #class for encapsulating color operations
 
-	def __init__(self, whiteThreshold = 26000, blackThreshold = 11000 ):
+	def __init__(self, whiteThreshold = 48000, blackThreshold = 11000 ):
 		self.blackThreshold = blackThreshold;
 		self.whiteThreshold = whiteThreshold;
 
@@ -54,7 +54,7 @@ class ColorSensor():
 			#	color = 'blue'	
 			#else:
 			#	color = 'blue'
-			if((colorReading[1] < colorReading[2]) and (colorReading[2] > colorReading[3]) and (colorReading[0] < 10001) and ((colorReading[2]-colorReading[1]) > 300)):
+			if((colorReading[1] < colorReading[3]) and (colorReading[2] < colorReading[3]) and (colorReading[0] < 20001)):
 				color = 'blue'
 			elif(colorReading[1] > (colorReading[3] + colorReading[2])): # and (colorReading[1] > colorReading[2])):
 				color = 'red'
