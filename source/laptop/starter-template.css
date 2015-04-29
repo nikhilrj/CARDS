@@ -1,0 +1,19 @@
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+
+.overlay
+{
+    background-image: url('flow_chart.png');
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    left: 200px;
+    width: 500px;
+    height: 600px;
+}

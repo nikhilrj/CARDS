@@ -20,41 +20,29 @@ driver.get("file:///" + os.path.abspath('ConsoleAppWebpage.html'))
 
 pageTemplate = '''
 <!DOCTYPE html>
-<!-- saved from url=(0051)http://getbootstrap.com/examples/starter-template/# -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>CARDS</title>
+<html>
+   <head>
+      <title>change picture</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   </head>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <div class="starter-template">
-        <h1>CARDS</h1>
-        <p1 class="lead">Fault Injected: {num_injected}<br></p1>
-        <p2 class="lead">Memory Error Detected: {num_memerr}<br></p2>
-        <p3 class="lead">Control Flow Error Detected: {num_cfgerr}<br></p3>
-        <img id="img1" src="flow_chart.png" width="800" height="800">
-      </div>
-
-    </div>
-
-</body></html>
+   <body>
+      <img id="img1" src="image1.png" class="img-circle" alt="Cinque Terre" width="200" height="200" border="300" style="border:{border1}">
+      <img id="img2" src="image2.png" class="img-circle" alt="Cinque Terre" width="200" height="200" border="300" style="border:{border2}">
+      <img id="img3" src="image3.png" class="img-circle" alt="Cinque Terre" width="200" height="200" border="300" style="border:{border3}">
+      <img id="img4" src="image4.png" class="img-circle" alt="Cinque Terre" width="200" height="200" border="300" style="border:{border4}">
+   </body>
+</html>
 '''
 
 def strToFile(text, filename):
-    youtput = open(filename,"w")
+    """Write a file with the given name and the given text."""
+    output = open(filename,"w")
     output.write(text)
     output.close()
 
@@ -62,17 +50,24 @@ def browseLocal(webpageText, filename='ConsoleAppWebpage.html'):
     strToFile(webpageText, filename)
     driver.refresh()
 
-def parseErrorType(str_msg)
-    
-    return err_type
-
 while(True):
     raw_msg = conn.recv(size)
     str_msg = raw_msg.decode('utf-8')
-    parsed = parseString(str_msg)
-    num_injected = "0"
-    num_memerr = "0"
-    num_cfgerr = "0"
+    state_num = int(str_msg)
+
+    border1 = "none"
+    border2 = "none"
+    border3 = "none"
+    border4 = "none"
+
+    if state_num == 1:
+        border1 = "5px solid black"
+    elif state_num == 2:
+        border2 = "5px solid black"
+    elif state_num == 3:
+        border3 = "5px solid black"
+    elif state_num == 4:
+        border4 = "5px solid black"
 
     contents = pageTemplate.format(**locals())
 
