@@ -14,7 +14,7 @@ from control import *
 class ColorSensor():
 #class for encapsulating color operations
 
-	def __init__(self, whiteThreshold = 35000, blackThreshold = 9000):
+	def __init__(self, whiteThreshold = 48000, blackThreshold = 11000 ):
 		self.blackThreshold = blackThreshold;
 		self.whiteThreshold = whiteThreshold;
 
@@ -41,19 +41,23 @@ class ColorSensor():
 		CFC.update(ColorSensor.distance)
 
 		color = ''
-		if (colorReading[0] < self.blackThreshold):
+		if (sum(colorReading) < self.blackThreshold):
 			color = 'black'
-		elif (colorReading[0] > self.whiteThreshold):
+		elif (sum(colorReading) > self.whiteThreshold):
 			color = 'white'
 		else:
-			if ((colorReading[1] > colorReading[3]) and (colorReading[1] > colorReading[2])):
-				color = 'red'
-			elif((colorReading[2] > colorReading[1]) and (colorReading[2] > colorReading[3])):
-				color = 'green'
-			elif((colorReading[3] > colorReading[1]) and (colorReading[3] > colorReading[2])):
-				color = 'blue'	
-			else:
+			#if ((colorReading[1] > colorReading[3]) and (colorReading[1] > colorReading[2])):
+			#	color = 'red'
+			#elif((colorReading[2] > colorReading[1]) and (colorReading[2] > colorReading[3])):
+			#	color = 'green'
+			#elif((colorReading[3] > colorReading[1]) and (colorReading[3] > colorReading[2])):
+			#	color = 'blue'	
+			#else:
+			#	color = 'blue'
+			if((colorReading[1] < colorReading[3]) and (colorReading[2] < colorReading[3]) and (colorReading[0] < 20001)):
 				color = 'blue'
+			elif(colorReading[1] > (colorReading[3] + colorReading[2])): # and (colorReading[1] > colorReading[2])):
+				color = 'red'
 		return color
 
 	def __eq__(self, other):

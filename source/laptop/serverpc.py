@@ -136,12 +136,20 @@ def updateCFGErr(message):
 		cfg_err_src = "fl_drive_yellow.png"
 
 def worker():
+<<<<<<< HEAD
 	num_injected = "0"
 	num_memerr = "0"
 	num_cfgerr = "0"
 	most_recent_err = "0"
 	cfg_err_src = "empty_img.png"
 	cfg_err_dst = "empty_img.png"
+=======
+	while(True):
+		print(sender.recv(size))
+		exit()
+	
+	
+>>>>>>> master
 	
 	while(True):
 		raw_msg = sender.recv(size)

@@ -6,6 +6,8 @@ import rsa
 import time, select
   
 from control import *
+#from variable import *
+#global mission
 
 class PiServer():
 
@@ -26,13 +28,17 @@ class PiServer():
 
 		print 'Client Public key sent.'
 
-	def operation(self):
+	def operation(self, motors=None):
 		global CFC
 		CFC.update(PiServer.operation)
 
 		if select.select([conn], [], [], 0)[0]:
 			encryptedMessage = conn.recv(size)
 			decryptedMessage = rsa.decrypt(encryptedMessage, self.privKey)
+			print decryptedMessage.lower()
+			
+			motors.drive(25, 25)
+			#time.sleep(1)
 			return decryptedMessage.lower()
 
 	def send(self, msg):

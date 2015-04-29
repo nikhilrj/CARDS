@@ -26,21 +26,29 @@ class Direction():
 		#print CFC
 		CFC.update(Direction.sensorRead)
 
-		return [GPIO.input(4), GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
+		#return [GPIO.input(4), GPIO.input(17), GPIO.input(18), GPIO.input(27), GPIO.input(22), GPIO.input(23)]
+		return [GPIO.input(17), GPIO.input(18), GPIO.input(23), GPIO.input(24)]
+		#return [GPIO.input(17), GPIO.input(18), GPIO.input(23]
 
-	def calcWeights(self, sensorData, c=32, baseSpeed = 64):
+	def calcWeights(self, sensorData, c=16, baseSpeed = 48, clr = 'black'):
 		global CFC
 		CFC.update(Direction.calcWeights)
 		
-		weights = [-8, -2, 0, 0, 2, 8]
+		#weights = [-8, -2, 0, 0, 2, 8]
+		weights = [-8, -4, 4, 8]
+		#weights = [-6, 0, 6]
 
 		numActive = 0
 		for i in sensorData:
 			if i > 0:
 				numActive+=1
 
-		if numActive <= 0:
-			return [0, 0, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE]
+		#if numActive <= 0:
+			#return [0, 0, Adafruit_MotorHAT.RELEASE, Adafruit_MotorHAT.RELEASE]
+		
+		if clr not in [ 'black', 'white', '']:
+			#print clr
+			c = 0		
 
 		dot = 0
 		for i in xrange(0, len(weights)):
