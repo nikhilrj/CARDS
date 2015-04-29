@@ -63,7 +63,6 @@ pageTemplate = '''
 
 	  <div class="starter-template">
 		<h1>CARDS</h1>
-		<p1 class="lead">Fault Injected: {num_injected}<br></p1>
 		<p2 class="lead">Memory Error Detected: {num_memerr}<br></p2>
 		<p3 class="lead">Control Flow Error Detected: {num_cfgerr}<br></p3>
 		<p4 class="lead">Most Recent Error Detected: {most_recent_err}<br></p4>
@@ -136,7 +135,6 @@ def updateCFGErr(message):
 		cfg_err_src = "fl_drive_yellow.png"
 
 def worker():
-	num_injected = "0"
 	num_memerr = "0"
 	num_cfgerr = "0"
 	most_recent_err = "0"
