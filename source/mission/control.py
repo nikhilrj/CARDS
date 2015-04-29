@@ -8,7 +8,8 @@ class ControlFlowException(Exception):
 
 
 class ControlFlowControl():
-	def __init__(self):
+	def __init__(self, CFC_ON=True):
+		self.CFC_ON = CFC_ON
 		self.prevState = None
 		self.graph = {}
 
@@ -18,8 +19,9 @@ class ControlFlowControl():
 
 	def update(self, fnc):
 		#print fnc, self.prevState
-		self.__isValid__(fnc)
-		self.prevState = fnc
+		if self.CFC_ON:
+			self.__isValid__(fnc)
+			self.prevState = fnc
 
 	def __isValid__(self, current):
 		if self.prevState not in self.graph[current]:

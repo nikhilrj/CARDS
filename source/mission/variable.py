@@ -30,7 +30,7 @@ class Variable():
 				self.equalities[self.var[i]] = 1
 
 		if len(self.equalities.keys()) > 1:
-			raise MemoryDuplicationException('Memory Corruption Error ' + self.equalities.__str__())
+			raise MemoryDuplicationException('Memory Corruption Error')
 
 	def leaderElect(self):
 		votes = 0

@@ -16,8 +16,8 @@ def buildControlGraph():
 	CFC.buildGraph(ColorSensor.readColor, [Direction.sensorRead, ColorSensor.readColor, ColorSensor.distance]) 
 	CFC.buildGraph(ColorSensor.distance, [ColorSensor.readColor, ColorSensor.distance])
 	CFC.buildGraph(PiServer.operation, [ColorSensor.distance, MotorDriver.turnOff])
-	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation, Direction.calcWeights])
-	CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights])
+	CFC.buildGraph(Direction.calcWeights, [ColorSensor.distance, PiServer.operation, Direction.calcWeights, MotorDriver.drive])
+	CFC.buildGraph(MotorDriver.drive, [Direction.calcWeights, PiServer.operation])
 
 	print CFC
 
@@ -46,7 +46,7 @@ class Mission():
 
 		color = Counter(colorReadings).most_common(1)[0][0]
 	
-		serverInput = self.server.operation()
+		serverInput = self.server.operation(self.motors)
 		if serverInput != None:
 			target = serverInput
 
@@ -107,6 +107,12 @@ if __name__ == '__main__':
 			mission.assertEquals()
 		except ZeroDivisionError, e:
 		#	print e
+			try:
+				mission.assertEquals()
+			except MemoryDuplicationException, e:
+				mission.member().server.send(e)
+				mission.leaderElect()
+				print 'Memory corruption fixed by CARDS'
 			pass
 		#except ControlFlowException, e:
 		#	mission.member().server.send(e)
@@ -118,6 +124,8 @@ if __name__ == '__main__':
 			print 'Memory corruption fixed by CARDS'
 		#except Exception, e:
 		#	mission.member().server.send(e)
+		#	global conn
+		#	conn.close()
 		#	print e
 		#	raise e
 
